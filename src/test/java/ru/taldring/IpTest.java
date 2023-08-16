@@ -9,6 +9,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.taldring.model.Origin;
 
+import static org.apache.http.HttpStatus.SC_CREATED;
+import static org.apache.http.HttpStatus.SC_OK;
+import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.Matchers.is;
+
 public class IpTest extends BaseTest {
 
     private Origin myOrigin;
@@ -23,9 +28,10 @@ public class IpTest extends BaseTest {
     @Test
     public void userAgentTest() {
         httpbinClient
-                .contentType(ContentType.JSON)
-                .get("http://localhost:80/user-agent")
-                .then().statusCode(200);
+                .get("/user-agent")
+                .then()
+                    .statusCode(anyOf(is(SC_OK), is(SC_CREATED)))
+                    .body("size()", is(1));
     }
 
     @Test
@@ -34,9 +40,12 @@ public class IpTest extends BaseTest {
 
         //when GET /ip
         Origin ua = httpbinClient
-                .contentType(ContentType.JSON)
-                .get("http://localhost:80/ip")
-                .as(Origin.class);
+                .when()
+                    .get("/ip")
+                .then()
+                    .extract()
+                    .body()
+                    .as(Origin.class);
 
         // then object is the same
         Assertions.assertEquals(ua, myOrigin);
