@@ -2,15 +2,23 @@ package ru.taldring;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.restassured.RestAssured;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.taldring.model.Origin;
 
-public class HttpBinTest extends BaseTest {
+public class IpTest extends BaseTest {
+
+    private Origin myOrigin;
+
+    @BeforeEach
+    public void init() {
+        // given
+        myOrigin = new Origin();
+        myOrigin.setOrigin("172.17.0.1");
+    }
 
     @Test
     public void userAgentTest() {
@@ -21,10 +29,8 @@ public class HttpBinTest extends BaseTest {
     }
 
     @Test
-    public void ipSerializationTest() {
-        // given
-        Origin myOrigin = new Origin();
-        myOrigin.setOrigin("172.17.0.1");
+    @DisplayName("GET /ip test")
+    public void ipTest() {
 
         //when GET /ip
         Origin ua = restClient
@@ -34,6 +40,11 @@ public class HttpBinTest extends BaseTest {
 
         // then object is the same
         Assertions.assertEquals(ua, myOrigin);
+    }
+
+    @Test
+    @DisplayName("Origin model serialization test")
+    public void ipSerializationTest() {
 
         // when serialize an deserialize object
         ObjectMapper om = new ObjectMapper();

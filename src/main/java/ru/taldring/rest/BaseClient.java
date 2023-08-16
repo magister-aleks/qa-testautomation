@@ -7,7 +7,7 @@ import io.restassured.specification.RequestSpecification;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class Client {
+public class BaseClient {
 
     public static RequestSpecification requestSpec() {
         RequestSpecification req =
