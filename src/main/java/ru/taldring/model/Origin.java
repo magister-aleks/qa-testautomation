@@ -1,13 +1,12 @@
 package ru.taldring.model;
 
+import lombok.Getter;
+
 import java.util.Objects;
 
+@Getter
 public class Origin {
 	private String origin;
-
-	public String getOrigin(){
-		return origin;
-	}
 
 	public void setOrigin(String origin) {
 		this.origin = origin;

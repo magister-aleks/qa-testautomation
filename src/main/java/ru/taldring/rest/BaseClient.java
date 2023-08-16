@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BaseClient {
 
-    public static RequestSpecification requestSpec() {
+    public RequestSpecification requestSpec() {
         RequestSpecification req =
         RestAssured
                 .given()

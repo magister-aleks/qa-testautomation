@@ -22,7 +22,7 @@ public class IpTest extends BaseTest {
 
     @Test
     public void userAgentTest() {
-        restClient
+        httpbinClient
                 .contentType(ContentType.JSON)
                 .get("http://localhost:80/user-agent")
                 .then().statusCode(200);
@@ -33,7 +33,7 @@ public class IpTest extends BaseTest {
     public void ipTest() {
 
         //when GET /ip
-        Origin ua = restClient
+        Origin ua = httpbinClient
                 .contentType(ContentType.JSON)
                 .get("http://localhost:80/ip")
                 .as(Origin.class);
